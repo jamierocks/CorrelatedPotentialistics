@@ -64,7 +64,10 @@ minecraft {
 
 	runDir = "minecraft"
 
-	replaceIn 'src/main/java/io/github/elytra/copo/CoPo.java'
+	replaceIn 'src/main/java/io/github/elytra/copo/core/CoCore.java'
+	replaceIn 'src/main/java/io/github/elytra/copo/items/CoItems.java'
+	replaceIn 'src/main/java/io/github/elytra/copo/compat/CoCompat.java'
+	replaceIn 'src/main/java/io/github/elytra/copo/wireless/CoWireless.java'
 	replace '@VERSION@', project.version
 }
 

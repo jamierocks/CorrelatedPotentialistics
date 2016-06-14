@@ -1,0 +1,145 @@
+itemGroup.correlatedPotentialistics=Correlated Potentialistics
+
+container.correlatedcore.drive_bay.name=Drive Bay
+
+tile.correlatedcore.controller.name=Controller
+tile.correlatedcore.drive_bay.name=Drive Bay
+tile.correlatedcore.vt.name=Terminal
+tile.correlatedcore.iface.name=Interface
+tile.correlatedcore.wireless_receiver.name=Wireless Receiver
+tile.correlatedcore.wireless_transmitter.name=Wireless Transmitter
+
+gui.correlatedcore.vt=Terminal
+
+gui.correlatedcore.priority=Priority
+gui.correlatedcore.priority.highest=Highest (3)
+gui.correlatedcore.priority.higher=Higher (2)
+gui.correlatedcore.priority.high=High (1)
+gui.correlatedcore.priority.default=Normal (0)
+gui.correlatedcore.priority.low=Low (-1)
+gui.correlatedcore.priority.lower=Lower (-2)
+gui.correlatedcore.priority.lowest=Lowest (-3)
+
+gui.correlatedcore.partition_mode=Partitioning Mode
+gui.correlatedcore.partition_mode.none=Not Partitioned
+gui.correlatedcore.partition_mode.none.0=Any items are allowed
+gui.correlatedcore.partition_mode.blacklist=Partitioned (Blacklist)
+gui.correlatedcore.partition_mode.blacklist.0=Only items not shown in
+gui.correlatedcore.partition_mode.blacklist.1=this gui are allowed
+gui.correlatedcore.partition_mode.whitelist=Partitioned (Whitelist)
+gui.correlatedcore.partition_mode.whitelist.0=Only items shown in this gui
+gui.correlatedcore.partition_mode.whitelist.1=are allowed
+
+
+item.correlatedcore.drive.0.name=1KiB Drive
+item.correlatedcore.drive.1.name=4KiB Drive
+item.correlatedcore.drive.2.name=16KiB Drive
+item.correlatedcore.drive.3.name=64KiB Drive
+item.correlatedcore.drive.4.name=Void Drive
+
+item.correlatedcore.misc.0.name=Enderic Processor
+tooltip.correlatedcore.misc.0.0=§5It seems to be part of something larger.
+item.correlatedcore.misc.1.name=Ceramic Drive Platter
+item.correlatedcore.misc.2.name=Metallic Drive Platter
+item.correlatedcore.misc.3.name=Luminous Pearl
+tooltip.correlatedcore.misc.3.0=§5It glows a brilliant verdant green.
+item.correlatedcore.misc.4.name=Luminous Torch
+item.correlatedcore.misc.5.name=Weldthrower Fuel
+
+item.correlatedcore.wireless_terminal.name=Wireless Terminal
+item.correlatedcore.weldthrower.name=Weldthrower
+tooltip.correlatedcore.weldthrower.0=§5Wrench, welder, flamethrower.
+tooltip.correlatedcore.weldthrower.1=§5What more could you possibly want?
+
+tooltip.correlatedcore.sortmode=Sorting Mode
+tooltip.correlatedcore.sortmode.quantity=Quantity
+tooltip.correlatedcore.sortmode.mod_minecraft_first=Originating Mod (Minecraft First)
+tooltip.correlatedcore.sortmode.mod=Originating Mod
+tooltip.correlatedcore.sortmode.name=Name
+
+tooltip.correlatedcore.sortdirection=Sorting Direction
+tooltip.correlatedcore.sortdirection.ascending=Ascending
+tooltip.correlatedcore.sortdirection.descending=Descending
+
+tooltip.correlatedcore.crafting_target=Crafting Target
+tooltip.correlatedcore.crafting_target.network=Network
+tooltip.correlatedcore.crafting_target.inventory=Inventory
+
+tooltip.correlatedcore.crafting_amount=Amount to Craft
+tooltip.correlatedcore.crafting_amount.one=One
+tooltip.correlatedcore.crafting_amount.stack=Stack
+tooltip.correlatedcore.crafting_amount.max=Maximum
+
+tooltip.correlatedcore.crafting.only_shift_click=(Only affects shift-click)
+
+tooltip.correlatedcore.clear_crafting_grid=Clear Crafting Grid
+
+
+msg.correlatedcore.vt_no_controller=Cannot find a Controller to communicate with.
+msg.correlatedcore.vt_no_power=The unlit screen resists all attempts at interaction. Maybe you should power the network?
+msg.correlatedcore.vt_error=There is a fatal error preventing access to the network.
+msg.correlatedcore.vt_booting=The network is still starting up.
+
+msg.correlatedcore.receiver_unlinked=This receiver does not have a linked transmitter. Right-click on a transmitter to link this receiver.
+msg.correlatedcore.receiver_linked=Receiver linked.
+
+msg.correlatedcore.terminal_unlinked=This terminal does not have a linked transmitter. Right-click on a transmitter to link this terminal.
+msg.correlatedcore.terminal_linked=Terminal linked.
+msg.correlatedcore.terminal_cantconnect=Cannot find the linked transmitter.
+msg.correlatedcore.terminal_outofrange=Transmitter out of range.
+
+numbers.correlatedcore.gibibytes=%d GiB
+numbers.correlatedcore.mibibytes=%d MiB
+numbers.correlatedcore.kibibytes=%d KiB
+numbers.correlatedcore.bytes=%d bytes
+numbers.correlatedcore.byte=1 byte
+
+
+numbers.correlatedcore.yotta=%sY
+numbers.correlatedcore.zetta=%sZ
+numbers.correlatedcore.exa=%sE
+numbers.correlatedcore.tera=%sT
+numbers.correlatedcore.giga=%sG
+numbers.correlatedcore.mega=%sM
+numbers.correlatedcore.kilo=%sk
+numbers.correlatedcore.normal=%d
+
+tooltip.correlatedcore.controller_booting=Initializing...
+tooltip.correlatedcore.controller_booting.hard=Booting...
+tooltip.correlatedcore.controller_boot_eta_one=ETA: 1 second
+tooltip.correlatedcore.controller_boot_eta=ETA: %d seconds
+tooltip.correlatedcore.controller_error.multiple_controllers=The network has more than one controller
+tooltip.correlatedcore.controller_error.network_too_big=The network is too big
+tooltip.correlatedcore.controller_error.too_much_power=The network takes too much power to run
+tooltip.correlatedcore.controller_error.infinite_loop=Wireless links are connected in an infinite loop
+tooltip.correlatedcore.controller_consumption_rate=Using %d RF/t total (max 320 RF/t)
+tooltip.correlatedcore.controller_energy_buffer=%d/%d RF
+tooltip.correlatedcore.member_consumption_rate=Using %d RF/t from controller
+tooltip.correlatedcore.side=Side: %s
+tooltip.correlatedcore.mode=Mode: %s
+tooltip.correlatedcore.no_controller=No Controller
+
+tooltip.correlatedcore.iface.mode_push=§fActive - §6Push
+tooltip.correlatedcore.iface.mode_pull=§fActive - §bPull
+tooltip.correlatedcore.iface.mode_none=§fPassive
+tooltip.correlatedcore.iface.mode_disabled=§8Disabled
+
+direction.correlatedcore.up=Top
+direction.correlatedcore.down=Bottom
+direction.correlatedcore.north=North
+direction.correlatedcore.east=East
+direction.correlatedcore.south=South
+direction.correlatedcore.west=West
+
+tooltip.correlatedcore.drive_count=%d/8 drives
+tooltip.correlatedcore.types_used=%d of %d types used (%d%%)
+tooltip.correlatedcore.bytes_used=%d of %d used (%d%%)
+tooltip.correlatedcore.rf_usage=Uses %d RF/t
+
+tooltip.correlatedcore.void_drive.0=Deletes any items that are assigned to it
+tooltip.correlatedcore.void_drive.1=Partitioning this is a good idea
+
+subtitles.correlatedcore.weldthrow=Weldthrower weldthrows
+
+death.attack.correlatedcore.weld=%s was welded by %s
+death.attack.correlatedcore.weld.item=%s was welded by %s using %s
