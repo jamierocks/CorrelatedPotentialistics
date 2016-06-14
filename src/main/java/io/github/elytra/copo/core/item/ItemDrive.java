@@ -77,7 +77,9 @@ public class ItemDrive extends Item {
 	
 	public DriveCapabilityProvider getStorage(ItemStack stack) {
 		if (stack.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			return (DriveCapabilityProvider) stack.getCapability(CoCore.DIGITAL_STORAGE, null);
+			DriveCapabilityProvider dcp = (DriveCapabilityProvider) stack.getCapability(CoCore.DIGITAL_STORAGE, null);
+			dcp.checkConsistency();
+			return dcp;
 		}
 		return null;
 	}

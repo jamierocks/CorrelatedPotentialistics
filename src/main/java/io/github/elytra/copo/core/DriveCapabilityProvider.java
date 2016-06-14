@@ -115,6 +115,11 @@ public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCo
 		
 		maxTypes = nbt.getInteger("MaximumTypes");
 		maxBits = nbt.getInteger("MaximumBits");
+		
+		for (Content c : contents) {
+			NBTTagCompound child = nbt.getCompoundTag(String.valueOf(c.getOwner().getRegistryName()));
+			c.readFromNBT(child);
+		}
 	}
 
 	@Override
