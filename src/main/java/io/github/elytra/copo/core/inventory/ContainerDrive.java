@@ -2,7 +2,7 @@ package io.github.elytra.copo.core.inventory;
 
 import java.util.List;
 
-import io.github.elytra.copo.core.DriveCapabilityProvider;
+import io.github.elytra.copo.core.DriveStorageManager;
 import io.github.elytra.copo.core.item.ItemDrive;
 import io.github.elytra.copo.core.item.ItemDrive.PartitioningMode;
 import io.github.elytra.copo.core.item.ItemDrive.Priority;
@@ -92,7 +92,7 @@ public class ContainerDrive extends Container {
 					return false;
 				}
 			}
-			DriveCapabilityProvider storage = getItemDrive().getStorage(getDrive());
+			DriveStorageManager storage = getItemDrive().getStorage(getDrive());
 			return storage.getBits()+storage.getTypeAllocationCost() <= storage.getMaxBits();
 		}
 
@@ -183,11 +183,6 @@ public class ContainerDrive extends Container {
 	@Override
 	public void updateProgressBar(int id, int data) {
 
-	}
-
-	@Override
-	public void addListener(IContainerListener listener) {
-		super.addListener(listener);
 	}
 
 	@Override

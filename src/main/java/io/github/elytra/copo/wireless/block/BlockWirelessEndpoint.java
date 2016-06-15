@@ -66,7 +66,7 @@ public class BlockWirelessEndpoint extends Block {
 	public static final IProperty<Kind> kind = PropertyEnum.create("kind", Kind.class);
 	public static final IProperty<State> state = PropertyEnum.create("state", State.class);
 	
-	private AxisAlignedBB aabb = new AxisAlignedBB(0, 0, 0, 1, 0.3125, 1);
+	private final AxisAlignedBB aabb = new AxisAlignedBB(0, 0, 0, 1, 0.3125, 1);
 	
 	public BlockWirelessEndpoint() {
 		super(Material.IRON);

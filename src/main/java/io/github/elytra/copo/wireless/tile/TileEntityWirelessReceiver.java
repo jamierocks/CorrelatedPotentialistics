@@ -16,7 +16,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class TileEntityWirelessReceiver extends TileEntityWirelessEndpoint {
@@ -44,7 +43,7 @@ public class TileEntityWirelessReceiver extends TileEntityWirelessEndpoint {
 	public float getPitch(float partialTicks) {
 		switch (getCurrentState()) {
 			case ERROR:
-				return (((MathHelper.sin((worldObj.getTotalWorldTime()+partialTicks)/20f)+1)/2)*90)-20;
+				return (((sin((worldObj.getTotalWorldTime()+partialTicks)/20f)+1)/2)*90)-20;
 			case LINKED:
 				if (hasWorldObj() && getWorld().isRemote) {
 					return syncedPitch;
@@ -154,7 +153,7 @@ public class TileEntityWirelessReceiver extends TileEntityWirelessEndpoint {
 		if (!hasTransmitter()) return null;
 		Transmitter t = getTransmitter();
 		TileEntity te = getWorld().getTileEntity(t.position);
-		if (te != null && te instanceof TileEntityWirelessTransmitter) {
+		if (te instanceof TileEntityWirelessTransmitter) {
 			return ((TileEntityWirelessTransmitter)te).getController();
 		}
 		return null;

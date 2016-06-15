@@ -74,7 +74,7 @@ public class ItemWirelessTerminal extends Item {
 	public TileEntityController getTransmitterController(ItemStack stack, World world, EntityPlayer player) {
 		Transmitter t = getTransmitter(stack, world, player, false);
 		TileEntity te = world.getTileEntity(t.position);
-		if (te != null && te instanceof TileEntityWirelessTransmitter) {
+		if (te instanceof TileEntityWirelessTransmitter) {
 			return ((TileEntityWirelessTransmitter)te).getController();
 		}
 		return null;

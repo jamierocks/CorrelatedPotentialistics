@@ -69,8 +69,8 @@ public class ContainerInterface extends Container {
 		}
 	}
 
-	private TileEntityInterface te;
-	private EntityPlayer player;
+	private final TileEntityInterface te;
+	private final EntityPlayer player;
 
 	public ContainerInterface(InventoryPlayer playerInventory, EntityPlayer player, TileEntityInterface te) {
 		this.te = te;

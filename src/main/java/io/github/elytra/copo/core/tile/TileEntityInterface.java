@@ -1,18 +1,22 @@
 package io.github.elytra.copo.core.tile;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
 import com.google.common.base.Enums;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
-import copo.api.DigitalStorage.Content;
-import copo.api.DigitalStorage.ManagedContent;
-import copo.api.DigitalStorage.RemoveResult;
+import copo.api.Content;
+import copo.api.DigitalStorage;
+import copo.api.ManagedContent;
+import copo.api.RemoveResult;
+import gnu.trove.map.hash.TCustomHashMap;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
+import io.github.elytra.copo.core.ProtoStackHashingStrategy;
+import io.github.elytra.copo.items.CoItems;
+import io.github.elytra.copo.items.ItemDigitalStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -56,8 +60,8 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 				case ACTIVE_PUSH: return "push";
 				case PASSIVE: return "none";
 				case DISABLED: return "disabled";
+				default: return "unknown";
 			}
-			return null;
 		}
 
 		@Override
@@ -70,9 +74,9 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	 * this is honestly kind of a hack, but it's better than hardcoded special
 	 * cases for interfaces in the remove/add code
 	 */
-	public class InterfaceContents extends ManagedContent<ItemStack> {
+	public class InterfaceContent extends ManagedContent<ItemStack> {
 
-		public InterfaceContents() {
+		public InterfaceContent() {
 			super(null, null);
 		}
 
@@ -109,15 +113,21 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 		}
 
 		@Override
-		public List<ItemStack> getTypes() {
-			List<ItemStack> li = Lists.newArrayList();
+		public Collection<ItemStack> getTypes() {
+			Map<ItemStack, ItemStack> prototypes = new TCustomHashMap<>(new ProtoStackHashingStrategy());
 			for (int i = 9; i < 18; i++) {
 				ItemStack content = getStackInSlot(i);
 				if (content != null && content.stackSize > 0) {
-					li.add(content);
+					if (prototypes.containsKey(content)) {
+						prototypes.get(content).stackSize += content.stackSize;
+					} else {
+						ItemStack proto = content.copy();
+						proto.stackSize = 0;
+						prototypes.put(proto, content);
+					}
 				}
 			}
-			return li;
+			return prototypes.values();
 		}
 
 		@Override
@@ -126,18 +136,30 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 		@Override
 		public void readFromNBT(NBTTagCompound tag) {}
 
+		@Override
+		public int getAmountStored(ItemStack u) {
+			int amt = 0;
+			for (int i = 9; i < 18; i++) {
+				ItemStack content = getStackInSlot(i);
+				if (content != null && content.stackSize > 0) {
+					amt += content.stackSize;
+				}
+			}
+			return amt;
+		}
+
 	}
 	
-	private InventoryBasic inv = new InventoryBasic("container.interface", false, 18);
-	private ItemStack[] prototypes = new ItemStack[9];
-	private List<Content> contents;
+	private final InventoryBasic inv = new InventoryBasic("container.interface", false, 18);
+	private final ItemStack[] prototypes = new ItemStack[9];
+	private final List<Content<ItemStack>> contents;
 	
-	private Map<EnumFacing, IItemHandler> itemHandlers = Maps.newHashMap();
+	private final Map<EnumFacing, IItemHandler> itemHandlers = Maps.newHashMap();
 	
-	private FaceMode[] modes = new FaceMode[6];
+	private final FaceMode[] modes = new FaceMode[6];
 
 	public TileEntityInterface() {
-		contents = Collections.singletonList(new InterfaceContents());
+		contents = Collections.singletonList(new InterfaceContent());
 		for (EnumFacing ef : EnumFacing.VALUES) {
 			itemHandlers.put(ef, new SidedInvWrapper(this, ef));
 		}
@@ -498,8 +520,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		if (index >= 9) return false;
-		return true;
+		return index < 9;
 	}
 
 	@Override
@@ -522,7 +543,20 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	}
 
 	@Override
-	public List<Content> getContents() {
+	public Iterable<Content<?>> getContents() {
+		return (Iterable<Content<?>>)contents;
+	}
+
+	@Override
+	public <T> Iterable<Content<T>> getContent(DigitalStorage<T> storage) {
+		// TODO decouple
+		// the Interface should be a dummy block with capabilities added by
+		// Correlated modules; so the Items module would add IItemHandler caps
+		// onto the interface using a hook in DigitalStorage
+		return storage == CoItems.itemDigitalStorage ? getRealContent(CoItems.itemDigitalStorage) : null;
+	}
+
+	private Iterable<Content<ItemStack>> getRealContent(DigitalStorage<ItemStack> storage) {
 		return contents;
 	}
 

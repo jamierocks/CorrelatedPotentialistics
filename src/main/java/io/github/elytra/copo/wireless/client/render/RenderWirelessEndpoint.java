@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.client.model.pipeline.LightUtil;
 
-public class RenderWirelessEndpoint {
+public final class RenderWirelessEndpoint {
 
 	public static void renderBaseForItem(IBlockState state) {
 		Tessellator tess = Tessellator.getInstance();
@@ -77,5 +77,7 @@ public class RenderWirelessEndpoint {
 		}
 		Tessellator.getInstance().draw();
 	}
+	
+	private RenderWirelessEndpoint() {}
 
 }

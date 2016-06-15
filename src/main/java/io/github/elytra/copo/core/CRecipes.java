@@ -175,5 +175,7 @@ public class CRecipes {
 				));
 		
 	}
+	
+	private CRecipes() {}
 
 }

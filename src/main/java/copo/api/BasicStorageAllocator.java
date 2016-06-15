@@ -1,17 +1,8 @@
-package io.github.elytra.copo.core;
+package copo.api;
 
-import java.util.List;
-
-import copo.api.DigitalStorage.Content;
-import copo.api.StorageAllocator;
-import copo.api.StorageInconsistentException;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
-public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCompound>, ITrackedDigitalStorageHandler, StorageAllocator {
+public class BasicStorageAllocator implements StorageAllocator {
 	private int types;
 	private int bits;
 	
@@ -20,33 +11,6 @@ public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCo
 	
 	private int typeAllocationCost;
 	
-	private List<Content> contents;
-	
-	public DriveCapabilityProvider(ItemStack item, NBTTagCompound nbt) {
-		contents = CoCore.collectContents(item, nbt);
-		deserializeNBT(nbt);
-	}
-	
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (facing == null) {
-			if (capability == CoCore.DIGITAL_STORAGE) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (facing == null) {
-			if (capability == CoCore.DIGITAL_STORAGE) {
-				return (T) this;
-			}
-		}
-		return null;
-	}
-
 	public void setMaxBits(int maxBits) {
 		if (maxBits < bits) throw new IllegalArgumentException("Attempt to set maxBits below bits ("+maxBits+" < "+bits+")");
 		this.maxBits = maxBits;
@@ -92,7 +56,6 @@ public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCo
 		}
 	}
 	
-	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setInteger("AllocatedTypes", types);
@@ -100,26 +63,15 @@ public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCo
 		
 		tag.setInteger("MaximumTypes", maxTypes);
 		tag.setInteger("MaximumBits", maxBits);
-		for (Content c : contents) {
-			NBTTagCompound child = new NBTTagCompound();
-			c.writeToNBT(child);
-			tag.setTag(String.valueOf(c.getOwner().getRegistryName()), child);
-		}
 		return tag;
 	}
 
-	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		types = nbt.getInteger("AllocatedTypes");
 		bits = nbt.getInteger("AllocatedBits");
 		
 		maxTypes = nbt.getInteger("MaximumTypes");
 		maxBits = nbt.getInteger("MaximumBits");
-		
-		for (Content c : contents) {
-			NBTTagCompound child = nbt.getCompoundTag(String.valueOf(c.getOwner().getRegistryName()));
-			c.readFromNBT(child);
-		}
 	}
 
 	@Override
@@ -165,29 +117,20 @@ public class DriveCapabilityProvider implements ICapabilitySerializable<NBTTagCo
 		return amt;
 	}
 
-	@Override
-	public List<Content> getContents() {
-		return contents;
-	}
-
-	@Override
 	public int getTypes() {
 		return types;
 	}
 
-	@Override
 	public int getBits() {
 		return bits;
 	}
 
-	@Override
 	public int getMaxTypes() {
 		return maxTypes;
 	}
 
-	@Override
 	public int getMaxBits() {
 		return maxBits;
 	}
-	
+
 }

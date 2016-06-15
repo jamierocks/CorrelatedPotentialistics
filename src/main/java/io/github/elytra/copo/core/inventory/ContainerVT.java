@@ -117,8 +117,7 @@ public class ContainerVT extends Container {
 
 		@Override
 		public ItemStack getStack() {
-			ItemStack stack = this.stack;
-			return stack;
+			return this.stack;
 		}
 
 		@Override
@@ -336,8 +335,7 @@ public class ContainerVT extends Container {
 
 	public ItemStack addItemToNetwork(ItemStack stack) {
 		if (player.worldObj.isRemote) return null;
-		ItemStack is = vt.getController().addToNetwork(stack);
-		return is;
+		return vt.getController().addToNetwork(stack);
 	}
 
 	public ItemStack removeItemsFromNetwork(ItemStack prototype, int amount) {
@@ -348,7 +346,7 @@ public class ContainerVT extends Container {
 		return stack;
 	}
 
-	private List<Integer> oldStackSizes = Lists.newArrayList();
+	private final List<Integer> oldStackSizes = Lists.newArrayList();
 
 	@Override
 	protected Slot addSlotToContainer(Slot slotIn) {
@@ -498,6 +496,7 @@ public class ContainerVT extends Container {
 										break;
 									default:
 										success = false;
+										break;
 								}
 								if (!success) break;
 								for (int j = 0; j < 9; j++) {

@@ -12,7 +12,7 @@ public class GuiInterface extends GuiContainer {
 
 	// this may be used in the future, if this GUI gets more complicated
 	@SuppressWarnings("unused")
-	private ContainerInterface container;
+	private final ContainerInterface container;
 	public GuiInterface(ContainerInterface container) {
 		super(container);
 		this.container = container;

@@ -15,7 +15,7 @@
 },
 {
   "modid": "correlatedpotentialistics",
-  "name": "Correlated Compatialistics",
+  "name": "Correlated Compat",
   "description": "Converts old-style CoPo blocks to the new format.",
   "version": "${version}",
   "mcversion": "${mcversion}",
@@ -30,7 +30,7 @@
 },
 {
   "modid": "correlated|items",
-  "name": "Correlated Itemistics",
+  "name": "Correlated Items",
   "description": "Adds item storage to Correlated Core.",
   "version": "${version}",
   "mcversion": "${mcversion}",
@@ -45,7 +45,7 @@
 },
 {
   "modid": "correlated|wireless",
-  "name": "Correlated Wirelesstics",
+  "name": "Correlated Wireless",
   "description": "Adds wireless componentry to Correlated Core.",
   "version": "${version}",
   "mcversion": "${mcversion}",

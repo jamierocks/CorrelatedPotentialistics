@@ -2,12 +2,9 @@ package io.github.elytra.copo.core.helper;
 
 import java.util.Comparator;
 
-import com.google.common.primitives.Booleans;
 import com.google.common.primitives.Ints;
 
-import copo.api.DigitalStorage.Content;
-import io.github.elytra.copo.core.item.ItemDrive;
-import net.minecraft.item.ItemStack;
+import copo.api.Content;
 
 public class ContentsComparator implements Comparator<Content> {
 

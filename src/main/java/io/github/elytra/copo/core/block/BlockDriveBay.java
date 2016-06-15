@@ -147,6 +147,7 @@ public class BlockDriveBay extends Block {
 				break;
 			default:
 				x = 0;
+				break;
 		}
 		int slot = -1;
 		if (withinRegion(x, y, 3, 3)) {

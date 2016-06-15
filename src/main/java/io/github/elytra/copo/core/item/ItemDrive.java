@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.DriveCapabilityProvider;
+import io.github.elytra.copo.core.DriveStorageManager;
 import io.github.elytra.copo.core.client.CoreClientProxy;
 import io.github.elytra.copo.core.helper.ItemStacks;
 import io.github.elytra.copo.core.helper.Numbers;
@@ -66,7 +66,7 @@ public class ItemDrive extends Item {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		DriveCapabilityProvider dcp = new DriveCapabilityProvider(stack, nbt);
+		DriveStorageManager dcp = new DriveStorageManager(stack, nbt);
 		if (dcp.getMaxBits() == 0) {
 			dcp.setMaxBits(tierSizes[stack.getItemDamage()]);
 			dcp.setMaxTypes(64);
@@ -75,9 +75,9 @@ public class ItemDrive extends Item {
 		return dcp;
 	}
 	
-	public DriveCapabilityProvider getStorage(ItemStack stack) {
+	public DriveStorageManager getStorage(ItemStack stack) {
 		if (stack.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			DriveCapabilityProvider dcp = (DriveCapabilityProvider) stack.getCapability(CoCore.DIGITAL_STORAGE, null);
+			DriveStorageManager dcp = (DriveStorageManager) stack.getCapability(CoCore.DIGITAL_STORAGE, null);
 			dcp.checkConsistency();
 			return dcp;
 		}
@@ -100,7 +100,7 @@ public class ItemDrive extends Item {
 			b = ((int) (sin * 255f)) & 0xFF;
 			return r << 16 | g << 8 | b;
 		} else {
-			DriveCapabilityProvider storage = getStorage(stack);
+			DriveStorageManager storage = getStorage(stack);
 			float usedTypes = storage.getTypes()/(float)storage.getMaxTypes();
 			float usedBits = storage.getBits()/(float)storage.getMaxBits();
 			float both = (usedTypes+usedBits)/2;
@@ -109,10 +109,6 @@ public class ItemDrive extends Item {
 		}
 	}
 
-	public void markDirty(ItemStack stack) {
-		ItemStacks.ensureHasTag(stack).getTagCompound().setBoolean("Dirty", true);
-	}
-	
 	public int getTierColor(ItemStack stack) {
 		return tierColors[stack.getItemDamage() % tierColors.length];
 	}
@@ -131,7 +127,7 @@ public class ItemDrive extends Item {
 				i++;
 			}
 		} else {
-			DriveCapabilityProvider storage = getStorage(stack);
+			DriveStorageManager storage = getStorage(stack);
 			int typesUsed = storage.getTypes();
 			int typesMax = storage.getMaxTypes();
 			int bytesUsed = storage.getBits() / 8;
@@ -151,6 +147,28 @@ public class ItemDrive extends Item {
 		}
 		int dmg = stack.getItemDamage() + 1;
 		return ((int) Math.pow(2, dmg))/2;
+	}
+	
+	public Priority getPriority(ItemStack stack) {
+		return ItemStacks.getEnum(stack, "Priority", Priority.class)
+				.or(Priority.DEFAULT);
+	}
+
+	public void setPriority(ItemStack stack, Priority priority) {
+		ItemStacks.ensureHasTag(stack).getTagCompound().setString("Priority", priority.name());
+	}
+
+	public PartitioningMode getPartitioningMode(ItemStack stack) {
+		return ItemStacks.getEnum(stack, "PartitioningMode", PartitioningMode.class)
+				.or(PartitioningMode.NONE);
+	}
+
+	public void setPartitioningMode(ItemStack stack, PartitioningMode mode) {
+		ItemStacks.ensureHasTag(stack).getTagCompound().setString("PartitioningMode", mode.name());
+	}
+	
+	public void markDirty(ItemStack stack) {
+		ItemStacks.ensureHasTag(stack).getTagCompound().setBoolean("Dirty", true);
 	}
 
 }

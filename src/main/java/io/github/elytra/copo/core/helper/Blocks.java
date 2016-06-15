@@ -32,5 +32,7 @@ public class Blocks {
 		}
 		return false;
 	}
+	
+	private Blocks() {}
 
 }

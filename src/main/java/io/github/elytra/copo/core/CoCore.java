@@ -1,15 +1,17 @@
 package io.github.elytra.copo.core;
 
 import java.io.File;
-import java.util.List;
+import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Throwables;
+import com.google.common.collect.Maps;
 
+import copo.api.Content;
 import copo.api.DigitalStorage;
-import copo.api.DigitalStorage.Content;
+import copo.api.StorageAllocator;
 import io.github.elytra.copo.core.block.BlockController;
 import io.github.elytra.copo.core.block.BlockDriveBay;
 import io.github.elytra.copo.core.block.BlockInterface;
@@ -38,8 +40,6 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -51,6 +51,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -207,9 +208,22 @@ public class CoCore {
 			e.printStackTrace();
 		}
 	}
+	
+	@SubscribeEvent
+	public void onCapabilitiesAttach(AttachCapabilitiesEvent e) {
+		if (e.getObject() instanceof TileEntityInterface) {
+			for (DigitalStorage<?> ds : registry.getValues()) {
+				ds.injectCapabilities(e::addCapability);
+			}
+		}
+	}
 
-	public static List<Content> collectContents(ItemStack item, NBTTagCompound nbt) {
-		return null;
+	public static Map<DigitalStorage<?>, Content<?>> collectContents(StorageAllocator alloc) {
+		Map<DigitalStorage<?>, Content<?>> map = Maps.newHashMap();
+		for (DigitalStorage<?> ds : registry.getValues()) {
+			map.put(ds, ds.createContents(alloc));
+		}
+		return map;
 	}
 
 }

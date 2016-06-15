@@ -1,5 +1,6 @@
 package io.github.elytra.copo.core.helper;
 
+import com.google.common.base.Enums;
 import com.google.common.base.Optional;
 
 import net.minecraft.item.ItemStack;
@@ -48,11 +49,8 @@ public class ItemStacks {
 		if (!stack.hasTagCompound()) return Optional.absent();
 		if (!stack.getTagCompound().hasKey(key, NBT.TAG_STRING)) return Optional.absent();
 		String str = stack.getTagCompound().getString(key);
-		try {
-			return Optional.of(Enum.valueOf(clazz, str));
-		} catch (IllegalArgumentException|NullPointerException e) {
-			e.printStackTrace();
-			return Optional.absent();
-		}
+		return Enums.getIfPresent(clazz, str);
 	}
+	
+	private ItemStacks() {}
 }

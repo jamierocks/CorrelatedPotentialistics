@@ -28,8 +28,8 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 public class GuiVT extends GuiContainer {
 	private static final ResourceLocation background = new ResourceLocation(CoCore.MODID, "textures/gui/container/vt.png");
 
-	private ContainerVT container;
-	private GuiTextField searchField = new GuiTextField(0, Minecraft.getMinecraft().fontRendererObj, 0, 0, 85, 8);
+	private final ContainerVT container;
+	private final GuiTextField searchField = new GuiTextField(0, Minecraft.getMinecraft().fontRendererObj, 0, 0, 85, 8);
 	private String lastSearchQuery = "";
 	private GuiButtonExt sortDirection;
 	private GuiButtonExt sortMode;

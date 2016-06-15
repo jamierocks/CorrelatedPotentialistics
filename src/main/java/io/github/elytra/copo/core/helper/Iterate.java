@@ -31,5 +31,7 @@ public class Iterate {
 			over.visit(i, tagList.getCompoundTagAt(i));
 		}
 	}
+	
+	private Numbers() {}
 
 }

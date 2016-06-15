@@ -7,10 +7,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class TileEntityWirelessTransmitter extends TileEntityWirelessEndpoint {
 	private UUID id = UUID.randomUUID();
-	@Override
-	public void update() {
-		super.update();
-	}
 	
 	public UUID getId() {
 		return id;

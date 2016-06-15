@@ -3,9 +3,11 @@ package io.github.elytra.copo.core.tile;
 import java.util.List;
 
 import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import copo.api.DigitalStorage.Content;
+import copo.api.Content;
+import copo.api.DigitalStorage;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockDriveBay;
@@ -22,7 +24,6 @@ import net.minecraft.util.ITickable;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 public class TileEntityDriveBay extends TileEntityNetworkMember implements ITickable, IDigitalStorageHandler {
 
@@ -185,14 +186,19 @@ public class TileEntityDriveBay extends TileEntityNetworkMember implements ITick
 	}
 
 	@Override
-	public List<Content> getContents() {
-		List<Content> li = Lists.newArrayList();
+	public Iterable<Content> getContents() {
+		List<Iterable<Content>> li = Lists.newArrayList();
 		for (ItemStack is : drives) {
 			if (is != null && is.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-				li.addAll(is.getCapability(CoCore.DIGITAL_STORAGE, null).getContents());
+				li.add(is.getCapability(CoCore.DIGITAL_STORAGE, null).getContents());
 			}
 		}
-		return li;
+		return Iterables.concat(li);
+	}
+
+	@Override
+	public <T extends Content> Iterable<T> getContent(DigitalStorage<T> storage) {
+		return (Iterable<T>) Iterables.filter(getContents(), it -> it.getOwner() == storage);
 	}
 
 }

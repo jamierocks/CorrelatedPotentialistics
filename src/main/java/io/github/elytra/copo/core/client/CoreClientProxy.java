@@ -15,10 +15,6 @@ import io.github.elytra.copo.core.item.ItemMisc;
 import io.github.elytra.copo.core.tile.TileEntityController;
 import io.github.elytra.copo.core.tile.TileEntityDriveBay;
 import io.github.elytra.copo.core.tile.TileEntityVT;
-import io.github.elytra.copo.wireless.client.render.RenderWirelessReceiver;
-import io.github.elytra.copo.wireless.client.render.RenderWirelessTransmitter;
-import io.github.elytra.copo.wireless.tile.TileEntityWirelessReceiver;
-import io.github.elytra.copo.wireless.tile.TileEntityWirelessTransmitter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.IItemColor;
@@ -27,8 +23,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -39,7 +33,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.RenderTickEvent;
 
 public class CoreClientProxy extends CoreProxy {
 	public static float ticks = 0;
-	@SuppressWarnings("deprecation")
 	@Override
 	public void preInit() {
 		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityController.class, new RenderController());

@@ -42,4 +42,6 @@ public class Numbers {
 		}
 		return I18n.format("numbers."+CoCore.MODID+".normal", count);
 	}
+	
+	private Numbers() {}
 }

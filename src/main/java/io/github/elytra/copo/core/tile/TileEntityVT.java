@@ -20,7 +20,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class TileEntityVT extends TileEntityNetworkMember implements ITickable, IInventory, IVT {
-	private Map<UUID, UserPreferences> preferences = Maps.newHashMap();
+	private final Map<UUID, UserPreferences> preferences = Maps.newHashMap();
 
 	@Override
 	public void update() {

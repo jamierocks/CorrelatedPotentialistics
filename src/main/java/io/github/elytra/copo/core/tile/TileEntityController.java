@@ -7,9 +7,9 @@ import com.google.common.collect.Sets;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import copo.api.DigitalStorage.Content;
-import copo.api.DigitalStorage.ManagedContent;
-import copo.api.DigitalStorage.RemoveResult;
+import copo.api.Content;
+import copo.api.ManagedContent;
+import copo.api.RemoveResult;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockController;
@@ -23,17 +23,16 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 
 public class TileEntityController extends TileEntityNetworkMember implements IEnergyReceiver, ITickable {
-	private EnergyStorage energy = new EnergyStorage(32000, 321);
+	private final EnergyStorage energy = new EnergyStorage(32000, 321);
 	public boolean error = false;
 	public boolean booting = true;
 	public String errorReason;
 	private int consumedPerTick = 32;
 	public int bootTicks = 0;
-	private transient Set<BlockPos> networkMembers = Sets.newHashSet();
-	private transient Set<BlockPos> interfaces = Sets.newHashSet();
-	private transient Set<BlockPos> receivers = Sets.newHashSet();
+	private final transient Set<BlockPos> networkMembers = Sets.newHashSet();
+	private final transient Set<BlockPos> receivers = Sets.newHashSet();
 	
-	private transient List<ManagedContent<?>> contents = Lists.newArrayList();
+	private final transient List<ManagedContent<?>> contents = Lists.newArrayList();
 	
 	public int changeId = 0;
 	private boolean checkingInfiniteLoop = false;
@@ -372,14 +371,14 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 	public void onNetworkPatched(TileEntityNetworkMember tenm) {
 		if (networkMembers.isEmpty()) return;
 		if (tenm instanceof TileEntityWirelessReceiver) {
-			if (!receivers.contains(tenm)) {
+			if (!receivers.contains(tenm.getPos())) {
 				receivers.add(tenm.getPos());
 				checkInfiniteLoop();
 				changeId++;
 			}
 		}
 		if (tenm.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			for (Content c : tenm.getCapability(CoCore.DIGITAL_STORAGE, null).getContents()) {
+			for (Content<?> c : tenm.getCapability(CoCore.DIGITAL_STORAGE, null).getContents()) {
 				if (c instanceof ManagedContent) {
 					contents.add((ManagedContent<?>)c);
 				}

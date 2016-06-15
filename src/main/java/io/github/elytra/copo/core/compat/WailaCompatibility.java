@@ -27,4 +27,6 @@ public class WailaCompatibility {
 		ModuleRegistrar.instance().registerStackProvider(provider, BlockWirelessEndpoint.class);
 		ModuleRegistrar.instance().registerBodyProvider(provider, BlockWirelessEndpoint.class);
 	}
+	
+	private WailaCompatibility() {}
 }

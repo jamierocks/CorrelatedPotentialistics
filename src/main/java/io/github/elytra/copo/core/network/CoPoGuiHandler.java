@@ -1,7 +1,6 @@
 package io.github.elytra.copo.core.network;
 
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.WirelessTerminalVT;
 import io.github.elytra.copo.core.client.gui.GuiDrive;
 import io.github.elytra.copo.core.client.gui.GuiInterface;
 import io.github.elytra.copo.core.client.gui.GuiVT;
@@ -11,6 +10,7 @@ import io.github.elytra.copo.core.inventory.ContainerVT;
 import io.github.elytra.copo.core.item.ItemDrive;
 import io.github.elytra.copo.core.tile.TileEntityInterface;
 import io.github.elytra.copo.core.tile.TileEntityVT;
+import io.github.elytra.copo.wireless.WirelessTerminalVT;
 import io.github.elytra.copo.wireless.item.ItemWirelessTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

@@ -12,7 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public interface IVT {
 
-	public static class UserPreferences {
+	public class UserPreferences {
 		public SortMode sortMode = SortMode.QUANTITY;
 		public boolean sortAscending = false;
 		public String lastSearchQuery = "";

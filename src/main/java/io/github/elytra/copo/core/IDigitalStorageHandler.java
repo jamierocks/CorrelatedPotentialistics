@@ -1,9 +1,14 @@
 package io.github.elytra.copo.core;
 
-import java.util.List;
-
-import copo.api.DigitalStorage.Content;
+import copo.api.Content;
+import copo.api.DigitalStorage;
 
 public interface IDigitalStorageHandler {
-	List<Content> getContents();
+	/**
+	 * @return a collection of the contents of this storage handler, potentially
+	 * 		immutable and potentially a view. (It is encouraged to have both be
+	 * 		true.)
+	 */
+	Iterable<Content<?>> getContents();
+	<T> Iterable<Content<T>> getContent(DigitalStorage<T> storage);
 }

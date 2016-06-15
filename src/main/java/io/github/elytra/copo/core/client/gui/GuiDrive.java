@@ -5,11 +5,14 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import copo.api.ManagedContent;
 import io.github.elytra.copo.core.CoCore;
+import io.github.elytra.copo.core.DriveStorageManager;
 import io.github.elytra.copo.core.helper.Numbers;
 import io.github.elytra.copo.core.inventory.ContainerDrive;
 import io.github.elytra.copo.core.item.ItemDrive.PartitioningMode;
 import io.github.elytra.copo.core.item.ItemDrive.Priority;
+import io.github.elytra.copo.items.CoItems;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -22,10 +25,10 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 
 public class GuiDrive extends GuiContainer {
 	private static final ResourceLocation background = new ResourceLocation(CoCore.MODID, "textures/gui/container/drive_editor.png");
-	private ContainerDrive container;
+	private final ContainerDrive container;
 
-	private GuiButton priority;
-	private GuiButton partition;
+	private final GuiButton priority;
+	private final GuiButton partition;
 
 	public GuiDrive(ContainerDrive container) {
 		super(container);
@@ -49,11 +52,6 @@ public class GuiDrive extends GuiContainer {
 
 		buttonList.add(priority);
 		buttonList.add(partition);
-	}
-
-	@Override
-	public void updateScreen() {
-		super.updateScreen();
 	}
 
 	@Override
@@ -89,6 +87,7 @@ public class GuiDrive extends GuiContainer {
 		if (renderer == null) {
 			renderer = fontRendererObj;
 		}
+		DriveStorageManager dcp = container.getItemDrive().getStorage(container.getDrive());
 		renderer.drawString(container.getDrive().getDisplayName(), 8, 6, 0x404040);
 		fontRendererObj.drawString(I18n.format("gui.inventory"), 8, 128, 0x404040);
 		GlStateManager.pushMatrix();
@@ -98,7 +97,8 @@ public class GuiDrive extends GuiContainer {
 			Slot slot = container.inventorySlots.get(i);
 			if (slot.getHasStack()) {
 				ItemStack stack = slot.getStack();
-				int stored = container.getItemDrive().getAmountStored(container.getDrive(), stack);
+				// TODO decouple
+				int stored = ManagedContent.getTotalAmountStored(dcp.getContent(CoItems.itemDigitalStorage), stack);
 				if (stored > 0) {
 					String str = Numbers.humanReadableItemCount(stored);
 					int x = slot.xDisplayPosition*2;
