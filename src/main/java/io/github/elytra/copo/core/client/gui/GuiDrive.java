@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import copo.api.ManagedContent;
+import copo.api.content.ManagedContent;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.DriveStorageManager;
 import io.github.elytra.copo.core.helper.Numbers;

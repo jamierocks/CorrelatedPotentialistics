@@ -79,8 +79,8 @@ public class CoPoWailaProvider implements IWailaDataProvider {
 				body.add("\u00A7c"+I18n.format("tooltip."+CoCore.MODID+".no_controller"));
 			}
 		}
-		if (access.getTileEntity().hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			IDigitalStorageHandler idsh = access.getTileEntity().getCapability(CoCore.DIGITAL_STORAGE, null);
+		if (access.getTileEntity().hasCapability(CoCore.digitalStorage, null)) {
+			IDigitalStorageHandler idsh = access.getTileEntity().getCapability(CoCore.digitalStorage, null);
 			int totalBytesUsed = 0;
 			int totalMaxBytes = 0;
 			int totalTypesUsed = 0;

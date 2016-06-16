@@ -2,23 +2,22 @@ package io.github.elytra.copo.core.helper;
 
 import java.text.NumberFormat;
 
-import io.github.elytra.copo.core.CoCore;
 import net.minecraft.client.resources.I18n;
 
-public class Numbers {
+public final class Numbers {
 	public static final int GIBIBYTE = 1024*1024*1024;
 	public static final int MIBIBYTE = 1024*1024;
 	public static final int KIBIBYTE = 1024;
 	public static String humanReadableBytes(int bytes) {
-		if (bytes == 1) return I18n.format("numbers."+CoCore.MODID+".byte");
+		if (bytes == 1) return I18n.format("numbers.correlated.byte");
 		if (bytes >= GIBIBYTE) {
-			return I18n.format("numbers."+CoCore.MODID+".gibibytes", bytes/GIBIBYTE);
+			return I18n.format("numbers.correlated.gibibytes", bytes/GIBIBYTE);
 		} else if (bytes >= MIBIBYTE) {
-			return I18n.format("numbers."+CoCore.MODID+".mibibytes", bytes/MIBIBYTE);
+			return I18n.format("numbers.correlated.mibibytes", bytes/MIBIBYTE);
 		} else if (bytes >= KIBIBYTE) {
-			return I18n.format("numbers."+CoCore.MODID+".kibibytes", bytes/KIBIBYTE);
+			return I18n.format("numbers.correlated.kibibytes", bytes/KIBIBYTE);
 		}
-		return I18n.format("numbers."+CoCore.MODID+".bytes", bytes);
+		return I18n.format("numbers.correlated.bytes", bytes);
 	}
 
 	public static final int GIGA = 1_000_000_000;
@@ -34,13 +33,13 @@ public class Numbers {
 			formatter.setMaximumFractionDigits(1);
 		}
 		if (count >= GIGA) {
-			return I18n.format("numbers."+CoCore.MODID+".giga", formatter.format((double)count/GIGA));
+			return I18n.format("numbers.correlated.giga", formatter.format((double)count/GIGA));
 		} else if (count >= MEGA) {
-			return I18n.format("numbers."+CoCore.MODID+".mega", formatter.format((double)count/MEGA));
+			return I18n.format("numbers.correlated.mega", formatter.format((double)count/MEGA));
 		} else if (count >= 10_000) {
-			return I18n.format("numbers."+CoCore.MODID+".kilo", formatter.format((double)count/KILO));
+			return I18n.format("numbers.correlated.kilo", formatter.format((double)count/KILO));
 		}
-		return I18n.format("numbers."+CoCore.MODID+".normal", count);
+		return I18n.format("numbers.correlated.normal", count);
 	}
 	
 	private Numbers() {}

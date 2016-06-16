@@ -32,6 +32,6 @@ public class Iterate {
 		}
 	}
 	
-	private Numbers() {}
+	private Iterate() {}
 
 }

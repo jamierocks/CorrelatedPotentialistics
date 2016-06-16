@@ -1,4 +1,8 @@
-package copo.api;
+package copo.api.allocation;
+
+import javax.annotation.Nonnegative;
+
+import copo.api.StorageInconsistentException;
 
 /**
  * Allows the allocation of types and bits in a drive, tracking the maximum
@@ -27,6 +31,7 @@ public interface StorageAllocator {
 	 * Attempt to allocate one type and N bits.
 	 * @return The amount of bits allocated. If zero, a type was not allocated.
 	 */
+	@Nonnegative
 	int allocateTypeAndBits(int bits);
 	
 	/**
@@ -34,11 +39,13 @@ public interface StorageAllocator {
 	 * @return The amount of bits allocated. Potentially 0. Never greater than
 	 * 		the amount requested.
 	 */
+	@Nonnegative
 	int allocateBits(int bits);
 	/**
 	 * Attempt to deallocate N bits.
 	 * @return The amount of bits deallocated. Potentially 0. Never greater than
 	 * 		the amount requested.
 	 */
+	@Nonnegative
 	int deallocateBits(int bits);
 }

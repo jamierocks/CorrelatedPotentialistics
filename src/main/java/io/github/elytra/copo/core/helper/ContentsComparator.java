@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 import com.google.common.primitives.Ints;
 
-import copo.api.Content;
+import copo.api.content.Content;
 
 public class ContentsComparator implements Comparator<Content> {
 

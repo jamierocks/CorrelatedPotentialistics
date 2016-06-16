@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-public class CRecipes {
+public final class CRecipes {
 
 	public static void register() {
 		ItemStack processor = new ItemStack(CoCore.misc, 1, 0);

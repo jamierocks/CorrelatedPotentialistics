@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 
-import copo.api.Content;
 import copo.api.DigitalStorage;
-import copo.api.StorageAllocator;
+import copo.api.allocation.StorageAllocator;
+import copo.api.content.Content;
 import io.github.elytra.copo.core.block.BlockController;
 import io.github.elytra.copo.core.block.BlockDriveBay;
 import io.github.elytra.copo.core.block.BlockInterface;
@@ -99,16 +99,17 @@ public class CoCore {
 	};
 
 	@CapabilityInject(IDigitalStorageHandler.class)
-	public static Capability<IDigitalStorageHandler> DIGITAL_STORAGE;
+	public static Capability<IDigitalStorageHandler> digitalStorage;
 
 	public SimpleNetworkWrapper network;
 	public Configuration config;
 	
 	public boolean easyProcessors;
 
+	@SuppressWarnings("unchecked")
 	public static final FMLControlledNamespacedRegistry<DigitalStorage<?>> registry = PersistentRegistryManager.createRegistry(
 				new ResourceLocation(MODID, "storage"), DigitalStorage.class, null, 0, 255, false,
-				DigitalStorageCallbacks.INSTANCE, DigitalStorageCallbacks.INSTANCE, DigitalStorageCallbacks.INSTANCE);
+				DigitalStorageCallbacks.add(), DigitalStorageCallbacks.clear(), DigitalStorageCallbacks.create());
 
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {

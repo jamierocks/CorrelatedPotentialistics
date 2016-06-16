@@ -1,7 +1,7 @@
 package io.github.elytra.copo.core;
 
-import copo.api.Content;
 import copo.api.DigitalStorage;
+import copo.api.content.Content;
 
 public interface IDigitalStorageHandler {
 	/**
@@ -9,6 +9,6 @@ public interface IDigitalStorageHandler {
 	 * 		immutable and potentially a view. (It is encouraged to have both be
 	 * 		true.)
 	 */
-	Iterable<Content<?>> getContents();
+	Iterable<? extends Content<?>> getContents();
 	<T> Iterable<Content<T>> getContent(DigitalStorage<T> storage);
 }

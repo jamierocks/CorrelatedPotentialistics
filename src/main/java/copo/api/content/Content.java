@@ -1,5 +1,11 @@
-package copo.api;
+package copo.api.content;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import copo.api.DigitalStorage;
+import copo.api.allocation.DummyAllocator;
+import copo.api.allocation.StorageAllocator;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
@@ -8,11 +14,12 @@ import net.minecraft.nbt.NBTTagCompound;
  * {@link ManagedContent} instead, as that lets you hook into the insert
  * and remove methods of the network.
  */
+@ParametersAreNonnullByDefault
 public abstract class Content<C> {
 	protected final StorageAllocator alloc;
 	private int priority;
 	private final DigitalStorage<?> owner;
-	public Content(DigitalStorage<?> owner, StorageAllocator alloc) {
+	public Content(DigitalStorage<?> owner, @Nullable StorageAllocator alloc) {
 		if (alloc == null) {
 			alloc = DummyAllocator.INSTANCE;
 		}

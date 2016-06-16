@@ -1,4 +1,6 @@
-package copo.api;
+package copo.api.allocation;
+
+import copo.api.StorageInconsistentException;
 
 public final class DummyAllocator implements StorageAllocator {
 

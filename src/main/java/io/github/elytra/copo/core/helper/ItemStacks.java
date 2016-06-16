@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class ItemStacks {
+public final class ItemStacks {
 	public static Optional<Integer> getInteger(ItemStack stack, String key) {
 		if (!stack.hasTagCompound()) return Optional.absent();
 		if (!stack.getTagCompound().hasKey(key, NBT.TAG_ANY_NUMERIC)) return Optional.absent();

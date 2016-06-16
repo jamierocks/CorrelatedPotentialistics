@@ -6,8 +6,8 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import copo.api.Content;
 import copo.api.DigitalStorage;
+import copo.api.content.Content;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockDriveBay;
@@ -171,7 +171,7 @@ public class TileEntityDriveBay extends TileEntityNetworkMember implements ITick
 	
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (facing == null && capability == CoCore.DIGITAL_STORAGE) {
+		if (facing == null && capability == CoCore.digitalStorage) {
 			return true;
 		}
 		return super.hasCapability(capability, facing);
@@ -179,26 +179,26 @@ public class TileEntityDriveBay extends TileEntityNetworkMember implements ITick
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (facing == null & capability == CoCore.DIGITAL_STORAGE) {
+		if (facing == null & capability == CoCore.digitalStorage) {
 			return (T)this;
 		}
 		return super.getCapability(capability, facing);
 	}
 
 	@Override
-	public Iterable<Content> getContents() {
-		List<Iterable<Content>> li = Lists.newArrayList();
+	public Iterable<? extends Content<?>> getContents() {
+		List<Iterable<? extends Content<?>>> li = Lists.newArrayList();
 		for (ItemStack is : drives) {
-			if (is != null && is.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-				li.add(is.getCapability(CoCore.DIGITAL_STORAGE, null).getContents());
+			if (is != null && is.hasCapability(CoCore.digitalStorage, null)) {
+				li.add(is.getCapability(CoCore.digitalStorage, null).getContents());
 			}
 		}
 		return Iterables.concat(li);
 	}
 
 	@Override
-	public <T extends Content> Iterable<T> getContent(DigitalStorage<T> storage) {
-		return (Iterable<T>) Iterables.filter(getContents(), it -> it.getOwner() == storage);
+	public <T> Iterable<? extends Content<? extends T>> getContent(DigitalStorage<? extends T> storage) {
+		return (Iterable<? extends Content<? extends T>>) Iterables.filter(getContents(), it -> it.getOwner() == storage);
 	}
 
 }

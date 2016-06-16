@@ -1,5 +1,6 @@
-package copo.api;
+package copo.api.allocation;
 
+import copo.api.StorageInconsistentException;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class BasicStorageAllocator implements StorageAllocator {
@@ -107,6 +108,7 @@ public class BasicStorageAllocator implements StorageAllocator {
 			throw new IllegalStateException("Cannot allocate bits without allocating a type");
 		}
 		int amt = Math.min(amount, maxBits-bits);
+		bits += amt;
 		return amt;
 	}
 

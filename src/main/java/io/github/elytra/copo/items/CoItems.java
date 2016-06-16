@@ -1,6 +1,8 @@
 package io.github.elytra.copo.items;
 
+import copo.api.DigitalStorage;
 import copo.api.DigitalStorageRegistry;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -14,7 +16,7 @@ public class CoItems {
 	@Instance(MODID)
 	public static CoItems inst;
 	
-	public static ItemDigitalStorage itemDigitalStorage;
+	public static DigitalStorage<ItemStack> itemDigitalStorage;
 	
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent e) {

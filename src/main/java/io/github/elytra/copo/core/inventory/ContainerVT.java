@@ -206,7 +206,6 @@ public class ContainerVT extends Container {
 				addSlotToContainer(new SlotVirtual(j + i * 9, x + j * 18, 18 + i * 18));
 			}
 		}
-		updateSlots();
 
 		addSlotToContainer(new SlotCrafting(player, craftMatrix, craftResult, 0, 26, 104));
 
@@ -225,7 +224,8 @@ public class ContainerVT extends Container {
 		for (int i = 0; i < 9; ++i) {
 			addSlotToContainer(new Slot(playerInventory, i, x + i * 18, 161 + y));
 		}
-
+		
+		updateSlots();
 	}
 
 	public void updateSlots() {

@@ -76,8 +76,8 @@ public class ItemDrive extends Item {
 	}
 	
 	public DriveStorageManager getStorage(ItemStack stack) {
-		if (stack.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			DriveStorageManager dcp = (DriveStorageManager) stack.getCapability(CoCore.DIGITAL_STORAGE, null);
+		if (stack.hasCapability(CoCore.digitalStorage, null)) {
+			DriveStorageManager dcp = (DriveStorageManager) stack.getCapability(CoCore.digitalStorage, null);
 			dcp.checkConsistency();
 			return dcp;
 		}

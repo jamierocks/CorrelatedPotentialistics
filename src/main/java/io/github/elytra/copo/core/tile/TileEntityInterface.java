@@ -2,21 +2,19 @@ package io.github.elytra.copo.core.tile;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import com.google.common.base.Enums;
 import com.google.common.collect.Maps;
 
-import copo.api.Content;
 import copo.api.DigitalStorage;
-import copo.api.ManagedContent;
-import copo.api.RemoveResult;
+import copo.api.content.Content;
+import copo.api.content.ManagedContent;
+import copo.api.content.RemoveResult;
 import gnu.trove.map.hash.TCustomHashMap;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.ProtoStackHashingStrategy;
 import io.github.elytra.copo.items.CoItems;
-import io.github.elytra.copo.items.ItemDigitalStorage;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -74,7 +72,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	 * this is honestly kind of a hack, but it's better than hardcoded special
 	 * cases for interfaces in the remove/add code
 	 */
-	public class InterfaceContent extends ManagedContent<ItemStack> {
+	private class InterfaceContent extends ManagedContent<ItemStack> {
 
 		public InterfaceContent() {
 			super(null, null);
@@ -152,14 +150,16 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	
 	private final InventoryBasic inv = new InventoryBasic("container.interface", false, 18);
 	private final ItemStack[] prototypes = new ItemStack[9];
-	private final List<Content<ItemStack>> contents;
+	private final InterfaceContent content;
+	private final Iterable<Content<ItemStack>> contents;
 	
 	private final Map<EnumFacing, IItemHandler> itemHandlers = Maps.newHashMap();
 	
 	private final FaceMode[] modes = new FaceMode[6];
 
 	public TileEntityInterface() {
-		contents = Collections.singletonList(new InterfaceContent());
+		content = new InterfaceContent();
+		contents = Collections.singletonList(content);
 		for (EnumFacing ef : EnumFacing.VALUES) {
 			itemHandlers.put(ef, new SidedInvWrapper(this, ef));
 		}
@@ -412,7 +412,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (facing == null && capability == CoCore.DIGITAL_STORAGE) {
+		if (facing == null && capability == CoCore.digitalStorage) {
 			return true;
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return true;
@@ -422,7 +422,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (facing == null & capability == CoCore.DIGITAL_STORAGE) {
+		if (facing == null & capability == CoCore.digitalStorage) {
 			return (T)this;
 		} else if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
 			return (T)itemHandlers.get(facing);
@@ -543,8 +543,8 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	}
 
 	@Override
-	public Iterable<Content<?>> getContents() {
-		return (Iterable<Content<?>>)contents;
+	public Iterable<? extends Content<?>> getContents() {
+		return contents;
 	}
 
 	@Override
@@ -553,11 +553,10 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 		// the Interface should be a dummy block with capabilities added by
 		// Correlated modules; so the Items module would add IItemHandler caps
 		// onto the interface using a hook in DigitalStorage
-		return storage == CoItems.itemDigitalStorage ? getRealContent(CoItems.itemDigitalStorage) : null;
-	}
-
-	private Iterable<Content<ItemStack>> getRealContent(DigitalStorage<ItemStack> storage) {
-		return contents;
+		if (storage == CoItems.itemDigitalStorage) {
+			return (Iterable<Content<T>>) contents;
+		}
+		return null;
 	}
 
 }

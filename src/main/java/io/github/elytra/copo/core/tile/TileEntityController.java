@@ -7,9 +7,9 @@ import com.google.common.collect.Sets;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import copo.api.Content;
-import copo.api.ManagedContent;
-import copo.api.RemoveResult;
+import copo.api.content.Content;
+import copo.api.content.ManagedContent;
+import copo.api.content.RemoveResult;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockController;
@@ -282,8 +282,8 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 		if (hasWorldObj() && worldObj.isRemote) return;
 		contents.clear();
 		for (TileEntity te : members(TileEntity.class, networkMembers)) {
-			if (te.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-				IDigitalStorageHandler h = te.getCapability(CoCore.DIGITAL_STORAGE, null);
+			if (te.hasCapability(CoCore.digitalStorage, null)) {
+				IDigitalStorageHandler h = te.getCapability(CoCore.digitalStorage, null);
 				for (Content c : h.getContents()) {
 					if (c instanceof ManagedContent) {
 						contents.add((ManagedContent<?>)c);
@@ -377,8 +377,8 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 				changeId++;
 			}
 		}
-		if (tenm.hasCapability(CoCore.DIGITAL_STORAGE, null)) {
-			for (Content<?> c : tenm.getCapability(CoCore.DIGITAL_STORAGE, null).getContents()) {
+		if (tenm.hasCapability(CoCore.digitalStorage, null)) {
+			for (Content<?> c : tenm.getCapability(CoCore.digitalStorage, null).getContents()) {
 				if (c instanceof ManagedContent) {
 					contents.add((ManagedContent<?>)c);
 				}

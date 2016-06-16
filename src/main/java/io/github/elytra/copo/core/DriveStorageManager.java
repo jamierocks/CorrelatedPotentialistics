@@ -3,9 +3,9 @@ package io.github.elytra.copo.core;
 import java.util.Collections;
 import java.util.Map;
 
-import copo.api.BasicStorageAllocator;
-import copo.api.Content;
 import copo.api.DigitalStorage;
+import copo.api.allocation.BasicStorageAllocator;
+import copo.api.content.Content;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -25,7 +25,7 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (facing == null) {
-			if (capability == CoCore.DIGITAL_STORAGE) {
+			if (capability == CoCore.digitalStorage) {
 				return true;
 			}
 		}
@@ -35,7 +35,7 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (facing == null) {
-			if (capability == CoCore.DIGITAL_STORAGE) {
+			if (capability == CoCore.digitalStorage) {
 				return (T) this;
 			}
 		}
@@ -92,6 +92,11 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	@Override
 	public int getMaxBits() {
 		return alloc.getMaxBits();
+	}
+
+	@Override
+	public int getTypeAllocationCost() {
+		return alloc.getTypeAllocationCost();
 	}
 	
 }

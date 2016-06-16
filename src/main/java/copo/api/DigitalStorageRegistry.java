@@ -1,5 +1,7 @@
 package copo.api;
 
+import javax.annotation.Nonnull;
+
 import io.github.elytra.copo.core.CoCore;
 
 /**
@@ -7,7 +9,7 @@ import io.github.elytra.copo.core.CoCore;
  * official kinds of storage work too, including items.
  */
 public final class DigitalStorageRegistry {
-	public static void register(DigitalStorage<?> storage) {
+	public static void register(@Nonnull DigitalStorage<?> storage) {
 		CoCore.registry.register(storage);
 	}
 	
