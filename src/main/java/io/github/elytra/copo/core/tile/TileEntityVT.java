@@ -6,7 +6,7 @@ import java.util.UUID;
 import com.google.common.collect.Maps;
 
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IVT;
+import io.github.elytra.copo.core.IVirtualTerminal;
 import io.github.elytra.copo.core.block.BlockVT;
 import io.github.elytra.copo.core.item.ItemDrive;
 import net.minecraft.block.state.IBlockState;
@@ -19,7 +19,7 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.util.Constants.NBT;
 
-public class TileEntityVT extends TileEntityNetworkMember implements ITickable, IInventory, IVT {
+public class TileEntityVT extends TileEntityNetworkMember implements ITickable, IInventory, IVirtualTerminal {
 	private final Map<UUID, UserPreferences> preferences = Maps.newHashMap();
 
 	@Override

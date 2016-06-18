@@ -2,13 +2,13 @@ package io.github.elytra.copo.core;
 
 import java.util.Map;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.IForgeRegistry.AddCallback;
 import net.minecraftforge.fml.common.registry.IForgeRegistry.ClearCallback;
 import net.minecraftforge.fml.common.registry.IForgeRegistry.CreateCallback;
 
-public class DigitalStorageCallbacks implements AddCallback<DigitalStorage<?>>, ClearCallback<DigitalStorage<?>>, CreateCallback<DigitalStorage<?>> {
+public class DigitalStorageCallbacks implements AddCallback<DigitalStorageKind<?>>, ClearCallback<DigitalStorageKind<?>>, CreateCallback<DigitalStorageKind<?>> {
 	private static final DigitalStorageCallbacks INSTANCE = new DigitalStorageCallbacks();
 	
 	// workaround for fiddly generics
@@ -39,7 +39,7 @@ public class DigitalStorageCallbacks implements AddCallback<DigitalStorage<?>>, 
 	}
 
 	@Override
-	public void onAdd(DigitalStorage<?> obj, int id, Map<ResourceLocation, ?> slaveset) {
+	public void onAdd(DigitalStorageKind<?> obj, int id, Map<ResourceLocation, ?> slaveset) {
 		
 	}
 

@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
 
-public interface IVT {
+public interface IVirtualTerminal {
 
 	public class UserPreferences {
 		public SortMode sortMode = SortMode.QUANTITY;

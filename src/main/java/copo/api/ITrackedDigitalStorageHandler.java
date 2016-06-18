@@ -1,4 +1,4 @@
-package io.github.elytra.copo.core;
+package copo.api;
 
 public interface ITrackedDigitalStorageHandler extends IDigitalStorageHandler {
 	int getTypes();

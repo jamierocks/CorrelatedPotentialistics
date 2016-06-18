@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import copo.api.allocation.StorageAllocator;
-import copo.api.content.ManagedContent;
+import copo.api.content.ManagedDigitalVolume;
 import copo.api.content.RemoveResult;
 import gnu.trove.map.hash.TCustomHashMap;
 import io.github.elytra.copo.core.ProtoStackHashingStrategy;
@@ -20,7 +20,7 @@ import net.minecraftforge.common.util.Constants.NBT;
  * implementation detail. Nobody should rely on something being a specific
  * instance of ItemContents — Use ManagedContent&lt;ItemStack&gt; instead.
  */
-final class ItemContents extends ManagedContent<ItemStack> {
+final class ItemContents extends ManagedDigitalVolume<ItemStack> {
 
 	private final Map<ItemStack, ItemStack> types;
 	private final Collection<ItemStack> view;
@@ -83,7 +83,7 @@ final class ItemContents extends ManagedContent<ItemStack> {
 	}
 
 	@Override
-	public Collection<ItemStack> getTypes() {
+	public Collection<ItemStack> getContents() {
 		return view;
 	}
 

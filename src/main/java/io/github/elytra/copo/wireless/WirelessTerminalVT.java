@@ -1,6 +1,6 @@
 package io.github.elytra.copo.wireless;
 
-import io.github.elytra.copo.core.IVT;
+import io.github.elytra.copo.core.IVirtualTerminal;
 import io.github.elytra.copo.core.tile.TileEntityController;
 import io.github.elytra.copo.wireless.CoWirelessWorldData.Transmitter;
 import io.github.elytra.copo.wireless.item.ItemWirelessTerminal;
@@ -9,7 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class WirelessTerminalVT implements IVT {
+public class WirelessTerminalVT implements IVirtualTerminal {
 	private final World world;
 	private final EntityPlayer player;
 	private final ItemWirelessTerminal iwt;

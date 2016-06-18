@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import copo.api.content.ManagedContent;
+import copo.api.content.ManagedDigitalVolume;
 import io.github.elytra.copo.core.CoCore;
 import io.github.elytra.copo.core.DriveStorageManager;
 import io.github.elytra.copo.core.helper.Numbers;
@@ -98,7 +98,7 @@ public class GuiDrive extends GuiContainer {
 			if (slot.getHasStack()) {
 				ItemStack stack = slot.getStack();
 				// TODO decouple
-				int stored = ManagedContent.getTotalAmountStored(dcp.getContent(CoItems.itemDigitalStorage), stack);
+				int stored = ManagedDigitalVolume.getTotalAmountStored(dcp.getContent(CoItems.itemDigitalStorage), stack);
 				if (stored > 0) {
 					String str = Numbers.humanReadableItemCount(stored);
 					int x = slot.xDisplayPosition*2;

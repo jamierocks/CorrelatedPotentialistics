@@ -204,6 +204,7 @@ public class ContainerDrive extends Container {
 						if (getItemDrive().getPartitioningMode(getDrive()) == PartitioningMode.NONE) return cursor;
 						if (cursor != null) {
 							if (slot.isItemValid(cursor)) {
+								
 								getItemDrive().allocateType(getDrive(), cursor, 0);
 								updateSlots();
 								player.inventory.setInventorySlotContents(driveSlotId, getDrive());

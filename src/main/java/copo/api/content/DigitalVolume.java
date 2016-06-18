@@ -3,23 +3,25 @@ package copo.api.content;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
 import copo.api.allocation.DummyAllocator;
 import copo.api.allocation.StorageAllocator;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
- * Represents the contents of digital storage. More exotic kinds of storage
+ * Represents a kind of storage within a Drive (liquid, mob, item, whatever).
+ * All storage represented 
+ * Represents a volume digital storage within a Drive. More exotic kinds of storage
  * must extend from this directly, but most implementors will want
- * {@link ManagedContent} instead, as that lets you hook into the insert
+ * {@link ManagedDigitalVolume} instead, as that lets you hook into the insert
  * and remove methods of the network.
  */
 @ParametersAreNonnullByDefault
-public abstract class Content<C> {
+public abstract class DigitalVolume<T> {
 	protected final StorageAllocator alloc;
 	private int priority;
-	private final DigitalStorage<?> owner;
-	public Content(DigitalStorage<?> owner, @Nullable StorageAllocator alloc) {
+	private final DigitalStorageKind<T> owner;
+	public DigitalVolume(DigitalStorageKind<T> owner, @Nullable StorageAllocator alloc) {
 		if (alloc == null) {
 			alloc = DummyAllocator.INSTANCE;
 		}
@@ -44,7 +46,7 @@ public abstract class Content<C> {
 		this.priority = priority;
 	}
 	
-	public final DigitalStorage<?> getOwner() {
+	public final DigitalStorageKind<?> getOwner() {
 		return owner;
 	}
 }

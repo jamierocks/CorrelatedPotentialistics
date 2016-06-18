@@ -3,9 +3,9 @@ package copo.api.content;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nullable;
 
-public class RemoveResult<U> {
+public class RemoveResult<T> {
 	@Nullable
-	private final U thing;
+	private final T thing;
 	@Nonnegative
 	private final int remaining;
 	/**
@@ -13,13 +13,13 @@ public class RemoveResult<U> {
 	 * @param remaining The amount of items that still need to be
 	 * 		retrieved, or 0 if they were all retrieved.
 	 */
-	public RemoveResult(@Nullable U thing, @Nonnegative int remaining) {
+	public RemoveResult(@Nullable T thing, @Nonnegative int remaining) {
 		this.thing = thing;
 		this.remaining = remaining;
 	}
 	
 	@Nullable
-	public U getThing() {
+	public T getThing() {
 		return thing;
 	}
 	

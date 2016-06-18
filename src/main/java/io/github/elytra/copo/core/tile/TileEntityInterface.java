@@ -6,13 +6,13 @@ import java.util.Map;
 import com.google.common.base.Enums;
 import com.google.common.collect.Maps;
 
-import copo.api.DigitalStorage;
-import copo.api.content.Content;
-import copo.api.content.ManagedContent;
+import copo.api.DigitalStorageKind;
+import copo.api.IDigitalStorageHandler;
+import copo.api.content.DigitalVolume;
+import copo.api.content.ManagedDigitalVolume;
 import copo.api.content.RemoveResult;
 import gnu.trove.map.hash.TCustomHashMap;
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.ProtoStackHashingStrategy;
 import io.github.elytra.copo.items.CoItems;
 import net.minecraft.entity.player.EntityPlayer;
@@ -72,7 +72,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	 * this is honestly kind of a hack, but it's better than hardcoded special
 	 * cases for interfaces in the remove/add code
 	 */
-	private class InterfaceContent extends ManagedContent<ItemStack> {
+	private class InterfaceContent extends ManagedDigitalVolume<ItemStack> {
 
 		public InterfaceContent() {
 			super(null, null);
@@ -111,7 +111,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 		}
 
 		@Override
-		public Collection<ItemStack> getTypes() {
+		public Collection<ItemStack> getContents() {
 			Map<ItemStack, ItemStack> prototypes = new TCustomHashMap<>(new ProtoStackHashingStrategy());
 			for (int i = 9; i < 18; i++) {
 				ItemStack content = getStackInSlot(i);
@@ -151,7 +151,7 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	private final InventoryBasic inv = new InventoryBasic("container.interface", false, 18);
 	private final ItemStack[] prototypes = new ItemStack[9];
 	private final InterfaceContent content;
-	private final Iterable<Content<ItemStack>> contents;
+	private final Iterable<DigitalVolume<ItemStack>> contents;
 	
 	private final Map<EnumFacing, IItemHandler> itemHandlers = Maps.newHashMap();
 	
@@ -543,18 +543,18 @@ public class TileEntityInterface extends TileEntityNetworkMember implements IInv
 	}
 
 	@Override
-	public Iterable<? extends Content<?>> getContents() {
+	public Iterable<? extends DigitalVolume<?>> getContents() {
 		return contents;
 	}
 
 	@Override
-	public <T> Iterable<Content<T>> getContent(DigitalStorage<T> storage) {
+	public <T> Iterable<DigitalVolume<T>> getContent(DigitalStorageKind<T> storage) {
 		// TODO decouple
 		// the Interface should be a dummy block with capabilities added by
 		// Correlated modules; so the Items module would add IItemHandler caps
 		// onto the interface using a hook in DigitalStorage
 		if (storage == CoItems.itemDigitalStorage) {
-			return (Iterable<Content<T>>) contents;
+			return (Iterable<DigitalVolume<T>>) contents;
 		}
 		return null;
 	}

@@ -7,11 +7,11 @@ import com.google.common.collect.Sets;
 
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyReceiver;
-import copo.api.content.Content;
-import copo.api.content.ManagedContent;
+import copo.api.IDigitalStorageHandler;
+import copo.api.content.DigitalVolume;
+import copo.api.content.ManagedDigitalVolume;
 import copo.api.content.RemoveResult;
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockController;
 import io.github.elytra.copo.core.block.BlockController.State;
 import io.github.elytra.copo.core.helper.ContentsComparator;
@@ -32,7 +32,7 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 	private final transient Set<BlockPos> networkMembers = Sets.newHashSet();
 	private final transient Set<BlockPos> receivers = Sets.newHashSet();
 	
-	private final transient List<ManagedContent<?>> contents = Lists.newArrayList();
+	private final transient List<ManagedDigitalVolume<?>> contents = Lists.newArrayList();
 	
 	public int changeId = 0;
 	private boolean checkingInfiniteLoop = false;
@@ -284,9 +284,9 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 		for (TileEntity te : members(TileEntity.class, networkMembers)) {
 			if (te.hasCapability(CoCore.digitalStorage, null)) {
 				IDigitalStorageHandler h = te.getCapability(CoCore.digitalStorage, null);
-				for (Content c : h.getContents()) {
-					if (c instanceof ManagedContent) {
-						contents.add((ManagedContent<?>)c);
+				for (DigitalVolume c : h.getContents()) {
+					if (c instanceof ManagedDigitalVolume) {
+						contents.add((ManagedDigitalVolume<?>)c);
 					}
 				}
 			}
@@ -309,9 +309,9 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 
 	public <T> T addToNetwork(T t) {
 		if (t == null) return null;
-		for (ManagedContent<?> c : contents) {
+		for (ManagedDigitalVolume<?> c : contents) {
 			if (c.canHandle(t)) {
-				t = ((ManagedContent<T>)c).insert(t);
+				t = ((ManagedDigitalVolume<T>)c).insert(t);
 				if (t == null) break;
 			}
 		}
@@ -329,9 +329,9 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 
 	public <T> RemoveResult<T> removeFromNetwork(T t, int amount) {
 		if (t == null) return new RemoveResult<T>(null, amount);
-		for (ManagedContent<?> c : contents) {
+		for (ManagedDigitalVolume<?> c : contents) {
 			if (c.canHandle(t)) {
-				RemoveResult<T> res = ((ManagedContent<T>)c).remove(t, amount);
+				RemoveResult<T> res = ((ManagedDigitalVolume<T>)c).remove(t, amount);
 				t = res.getThing();
 				amount = res.getRemaining();
 				if (amount <= 0) break;
@@ -352,17 +352,24 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 		return new RemoveResult<T>(t, amount);
 	}
 
-	public <T> List<T> getTypes(Class<T> type) {
+	/**
+	 * Gets all contents of the specified type (ItemStack, FluidStack, StoredMonster, StoredPhysicalSpace, etc.)
+	 * 
+	 */
+	@SuppressWarnings("unchecked")
+	public <T> List<T> getContents(Class<T> type) {
 		List<T> li = Lists.newArrayList();
-		for (ManagedContent<?> c : contents) {
+		for (ManagedDigitalVolume<?> c : contents) {
 			if (c.canHandle(type)) {
-				li.addAll(((ManagedContent<T>)c).getTypes());
+				for(T t : ((ManagedDigitalVolume<T>)c).getContents()) {
+					li.add(t);
+				}
 			}
 		}
 		for (TileEntityWirelessReceiver r : members(TileEntityWirelessReceiver.class, receivers)) {
 			TileEntityController cont = r.getTransmitterController();
 			if (cont != null) {
-				li.addAll(cont.getTypes(type));
+				li.addAll(cont.getContents(type));
 			}
 		}
 		return li;
@@ -378,9 +385,9 @@ public class TileEntityController extends TileEntityNetworkMember implements IEn
 			}
 		}
 		if (tenm.hasCapability(CoCore.digitalStorage, null)) {
-			for (Content<?> c : tenm.getCapability(CoCore.digitalStorage, null).getContents()) {
-				if (c instanceof ManagedContent) {
-					contents.add((ManagedContent<?>)c);
+			for (DigitalVolume<?> c : tenm.getCapability(CoCore.digitalStorage, null).getContents()) {
+				if (c instanceof ManagedDigitalVolume) {
+					contents.add((ManagedDigitalVolume<?>)c);
 				}
 			}
 		}

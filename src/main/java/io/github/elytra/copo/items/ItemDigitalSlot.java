@@ -2,7 +2,7 @@ package io.github.elytra.copo.items;
 
 import java.io.IOException;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
 import copo.api.slot.DigitalSlot;
 import copo.api.slot.DigitalSlotClientData;
 import net.minecraft.item.ItemStack;
@@ -10,11 +10,11 @@ import net.minecraft.network.PacketBuffer;
 
 final class ItemDigitalSlot extends DigitalSlot<ItemStack> {
 
-	public ItemDigitalSlot(DigitalStorage<ItemStack> parent, ItemStack content) {
+	public ItemDigitalSlot(DigitalStorageKind<ItemStack> parent, ItemStack content) {
 		super(parent, content);
 	}
 
-	public ItemDigitalSlot(DigitalStorage<ItemStack> parent) {
+	public ItemDigitalSlot(DigitalStorageKind<ItemStack> parent) {
 		super(parent);
 	}
 

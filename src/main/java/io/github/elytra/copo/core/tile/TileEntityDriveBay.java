@@ -6,10 +6,10 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import copo.api.DigitalStorage;
-import copo.api.content.Content;
+import copo.api.DigitalStorageKind;
+import copo.api.IDigitalStorageHandler;
+import copo.api.content.DigitalVolume;
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IDigitalStorageHandler;
 import io.github.elytra.copo.core.block.BlockDriveBay;
 import io.github.elytra.copo.core.helper.ItemStacks;
 import io.github.elytra.copo.core.item.ItemDrive;
@@ -186,8 +186,8 @@ public class TileEntityDriveBay extends TileEntityNetworkMember implements ITick
 	}
 
 	@Override
-	public Iterable<? extends Content<?>> getContents() {
-		List<Iterable<? extends Content<?>>> li = Lists.newArrayList();
+	public Iterable<DigitalVolume<?>> getContents() {
+		List<Iterable<DigitalVolume<?>>> li = Lists.newArrayList();
 		for (ItemStack is : drives) {
 			if (is != null && is.hasCapability(CoCore.digitalStorage, null)) {
 				li.add(is.getCapability(CoCore.digitalStorage, null).getContents());
@@ -197,8 +197,8 @@ public class TileEntityDriveBay extends TileEntityNetworkMember implements ITick
 	}
 
 	@Override
-	public <T> Iterable<? extends Content<? extends T>> getContent(DigitalStorage<? extends T> storage) {
-		return (Iterable<? extends Content<? extends T>>) Iterables.filter(getContents(), it -> it.getOwner() == storage);
+	public <T> Iterable<DigitalVolume<T>> getContent(DigitalStorageKind<T> storage) {
+		return (Iterable<DigitalVolume<T>>) Iterables.filter(getContents(), it -> it.getOwner() == storage);
 	}
 
 }

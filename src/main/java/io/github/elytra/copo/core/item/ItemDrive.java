@@ -68,9 +68,9 @@ public class ItemDrive extends Item {
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		DriveStorageManager dcp = new DriveStorageManager(stack, nbt);
 		if (dcp.getMaxBits() == 0) {
-			dcp.setMaxBits(tierSizes[stack.getItemDamage()]);
-			dcp.setMaxTypes(64);
-			dcp.setTypeAllocationCost(tierAllocSizes[stack.getItemDamage()]);
+			dcp.getAllocator().setMaxBits(tierSizes[stack.getItemDamage()]);
+			dcp.getAllocator().setMaxTypes(64);
+			dcp.getAllocator().setTypeAllocationCost(tierAllocSizes[stack.getItemDamage()]);
 		}
 		return dcp;
 	}
@@ -78,7 +78,7 @@ public class ItemDrive extends Item {
 	public DriveStorageManager getStorage(ItemStack stack) {
 		if (stack.hasCapability(CoCore.digitalStorage, null)) {
 			DriveStorageManager dcp = (DriveStorageManager) stack.getCapability(CoCore.digitalStorage, null);
-			dcp.checkConsistency();
+			dcp.getAllocator().checkConsistency();
 			return dcp;
 		}
 		return null;

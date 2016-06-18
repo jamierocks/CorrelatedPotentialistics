@@ -3,9 +3,11 @@ package io.github.elytra.copo.core;
 import java.util.Collections;
 import java.util.Map;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
+import copo.api.ITrackedDigitalStorageHandler;
 import copo.api.allocation.BasicStorageAllocator;
-import copo.api.content.Content;
+import copo.api.allocation.StorageAllocator;
+import copo.api.content.DigitalVolume;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -14,7 +16,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompound>, ITrackedDigitalStorageHandler {
 	
-	private final Map<DigitalStorage<?>, Content<?>> contents;
+	private final Map<DigitalStorageKind<?>, DigitalVolume<?>> contents;
 	private final BasicStorageAllocator alloc = new BasicStorageAllocator();
 	
 	public DriveStorageManager(ItemStack item, NBTTagCompound nbt) {
@@ -43,12 +45,12 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	}
 
 	@Override
-	public <T> Iterable<Content<T>> getContent(DigitalStorage<T> storage) {
-		return Collections.singleton((Content<T>) contents.get(storage));
+	public <T> Iterable<DigitalVolume<T>> getContent(DigitalStorageKind<T> storage) {
+		return Collections.singleton((DigitalVolume<T>) contents.get(storage));
 	}
 	
 	@Override
-	public Iterable<Content<?>> getContents() {
+	public Iterable<DigitalVolume<?>> getContents() {
 		return contents.values();
 	}
 	
@@ -56,7 +58,7 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound tag = new NBTTagCompound();
 		tag.setTag("Allocation", alloc.serializeNBT());
-		for (Content<?> c : contents.values()) {
+		for (DigitalVolume<?> c : contents.values()) {
 			NBTTagCompound child = new NBTTagCompound();
 			c.writeToNBT(child);
 			tag.setTag(String.valueOf(c.getOwner().getRegistryName()), child);
@@ -68,7 +70,7 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 	public void deserializeNBT(NBTTagCompound nbt) {
 		alloc.deserializeNBT(nbt.getCompoundTag("Allocation"));
 		
-		for (Content<?> c : contents.values()) {
+		for (DigitalVolume<?> c : contents.values()) {
 			NBTTagCompound child = nbt.getCompoundTag(String.valueOf(c.getOwner().getRegistryName()));
 			c.readFromNBT(child);
 		}
@@ -99,4 +101,7 @@ public class DriveStorageManager implements ICapabilitySerializable<NBTTagCompou
 		return alloc.getTypeAllocationCost();
 	}
 	
+	public BasicStorageAllocator getAllocator() {
+		return alloc;
+	}
 }

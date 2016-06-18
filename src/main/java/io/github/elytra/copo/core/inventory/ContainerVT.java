@@ -10,8 +10,8 @@ import java.util.Locale;
 import com.google.common.primitives.Ints;
 
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IVT;
-import io.github.elytra.copo.core.IVT.UserPreferences;
+import io.github.elytra.copo.core.IVirtualTerminal;
+import io.github.elytra.copo.core.IVirtualTerminal.UserPreferences;
 import io.github.elytra.copo.core.network.SetSearchQueryMessage;
 import io.github.elytra.copo.core.network.SetSlotSizeMessage;
 
@@ -94,7 +94,7 @@ public class ContainerVT extends Container {
 		}
 	}
 
-	public IVT vt;
+	public IVirtualTerminal vt;
 	private World world;
 	private EntityPlayer player;
 	private int scrollOffset;
@@ -182,7 +182,7 @@ public class ContainerVT extends Container {
 
 	}
 
-	public ContainerVT(IInventory playerInventory, EntityPlayer player, IVT vt) {
+	public ContainerVT(IInventory playerInventory, EntityPlayer player, IVirtualTerminal vt) {
 		this.player = player;
 		this.world = player.worldObj;
 		this.vt = vt;
@@ -231,7 +231,7 @@ public class ContainerVT extends Container {
 	public void updateSlots() {
 		if (world.isRemote) return;
 		lastChangeId = vt.getController().changeId;
-		List<ItemStack> typesAll = vt.getController().getTypes(ItemStack.class);
+		List<ItemStack> typesAll = vt.getController().getContents(ItemStack.class);
 		if (!searchQuery.isEmpty()) {
 			Iterator<ItemStack> itr = typesAll.iterator();
 			while (itr.hasNext()) {

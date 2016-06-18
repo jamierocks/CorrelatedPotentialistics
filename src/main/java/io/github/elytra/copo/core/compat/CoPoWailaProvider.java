@@ -2,9 +2,9 @@ package io.github.elytra.copo.core.compat;
 
 import java.util.List;
 
+import copo.api.IDigitalStorageHandler;
+import copo.api.ITrackedDigitalStorageHandler;
 import io.github.elytra.copo.core.CoCore;
-import io.github.elytra.copo.core.IDigitalStorageHandler;
-import io.github.elytra.copo.core.ITrackedDigitalStorageHandler;
 import io.github.elytra.copo.core.helper.Numbers;
 import io.github.elytra.copo.core.tile.TileEntityController;
 import io.github.elytra.copo.core.tile.TileEntityInterface;

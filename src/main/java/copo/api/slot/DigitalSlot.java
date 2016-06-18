@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.relauncher.Side;
 
@@ -18,12 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 @ParametersAreNonnullByDefault
 public abstract class DigitalSlot<T> {
-	protected final DigitalStorage<T> parent;
+	protected final DigitalStorageKind<T> parent;
 	private T content;
-	public DigitalSlot(DigitalStorage<T> parent) {
+	public DigitalSlot(DigitalStorageKind<T> parent) {
 		this.parent = parent;
 	}
-	public DigitalSlot(DigitalStorage<T> parent, T content) {
+	public DigitalSlot(DigitalStorageKind<T> parent, T content) {
 		this(parent);
 		this.content = content;
 	}

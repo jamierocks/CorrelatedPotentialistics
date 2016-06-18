@@ -9,9 +9,10 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.base.Throwables;
 import com.google.common.collect.Maps;
 
-import copo.api.DigitalStorage;
+import copo.api.DigitalStorageKind;
+import copo.api.IDigitalStorageHandler;
 import copo.api.allocation.StorageAllocator;
-import copo.api.content.Content;
+import copo.api.content.DigitalVolume;
 import io.github.elytra.copo.core.block.BlockController;
 import io.github.elytra.copo.core.block.BlockDriveBay;
 import io.github.elytra.copo.core.block.BlockInterface;
@@ -107,8 +108,8 @@ public class CoCore {
 	public boolean easyProcessors;
 
 	@SuppressWarnings("unchecked")
-	public static final FMLControlledNamespacedRegistry<DigitalStorage<?>> registry = PersistentRegistryManager.createRegistry(
-				new ResourceLocation(MODID, "storage"), DigitalStorage.class, null, 0, 255, false,
+	public static final FMLControlledNamespacedRegistry<DigitalStorageKind<?>> registry = PersistentRegistryManager.createRegistry(
+				new ResourceLocation(MODID, "storage"), DigitalStorageKind.class, null, 0, 255, false,
 				DigitalStorageCallbacks.add(), DigitalStorageCallbacks.clear(), DigitalStorageCallbacks.create());
 
 	@EventHandler
@@ -213,15 +214,15 @@ public class CoCore {
 	@SubscribeEvent
 	public void onCapabilitiesAttach(AttachCapabilitiesEvent e) {
 		if (e.getObject() instanceof TileEntityInterface) {
-			for (DigitalStorage<?> ds : registry.getValues()) {
+			for (DigitalStorageKind<?> ds : registry.getValues()) {
 				ds.injectCapabilities(e::addCapability);
 			}
 		}
 	}
 
-	public static Map<DigitalStorage<?>, Content<?>> collectContents(StorageAllocator alloc) {
-		Map<DigitalStorage<?>, Content<?>> map = Maps.newHashMap();
-		for (DigitalStorage<?> ds : registry.getValues()) {
+	public static Map<DigitalStorageKind<?>, DigitalVolume<?>> collectContents(StorageAllocator alloc) {
+		Map<DigitalStorageKind<?>, DigitalVolume<?>> map = Maps.newHashMap();
+		for (DigitalStorageKind<?> ds : registry.getValues()) {
 			map.put(ds, ds.createContents(alloc));
 		}
 		return map;
